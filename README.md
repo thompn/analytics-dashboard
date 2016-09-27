@@ -29,4 +29,4 @@ $ * Running on http://0.0.0.0:9999/ (Press CTRL+C to quit)
 ```
 Navigate to localhost:9999 to see web output, or push to a web server (be sure to disable debugging).
 
-![](https://github.com/thompn/analytics-dashboard/blob/master/static/images/screenshot.png?raw=true)]
+![](https://github.com/thompn/analytics-dashboard/blob/master/static/images/screenshot.png?raw=true)
