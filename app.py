@@ -44,71 +44,17 @@ titles = go.Bar(
     name='titles'
 )
 
-garagely = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Garagely'].date.dt.hour,
-    name='Garagely'
+user1 = go.Histogram(
+    x=comp.utimes.loc[comp.utimes['name'] == 'user1'].date.dt.hour,
+    name='user1'
 )
-ds = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'C'].date.dt.hour,
-    name='Ds'
+user2 = go.Histogram(
+    x=comp.utimes.loc[comp.utimes['name'] == 'user2'].date.dt.hour,
+    name='user2'
 )
-simon = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == '.'].date.dt.hour,
-    name='qx'
-)
-abdul = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'].isin(['raheem','ABDUL',\
-                                    'Abdul GREAZE +61'])].date.dt.hour,
-    name='Abdul'
-)
-ian = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'].isin(['I','Ian'])].date.dt.hour,
-    name='Ian'
-)
-ah = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'AH'].date.dt.hour,
-    name='Ash'
-)
-ben = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Ben'].date.dt.hour,
-    name='Ben'
-)
-tony = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Tony'].date.dt.hour,
-    name='Tony'
-)
-luke = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'].isin(['L','Luke',\
-                                'lxk'])].date.dt.hour,
-    name='Luke'
-)
-helder = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Slow'].date.dt.hour,
-    name='Slow'
-)
-henri = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Zorro'].date.dt.hour,
-    name='Henri'
-)
-wops = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Wops'].date.dt.hour,
-    name='Wops'
-)
-vast = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'] == 'Wops'].date.dt.hour,
-    name='Vast'
-)
-eu = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'].isin(['L','Luke','lxk','Wops', \
-                                        'Garagely','Zorro', 'Slow','Tony', \
-                                        'Ben', 'AH', 'raheem','ABDUL', \
-                                        'Abdul GREAZE +61', '.'])].date.dt.hour,
-    name='Europeans'
-)
-noneu = go.Histogram(
-    x=comp.utimes.loc[comp.utimes['name'].isin(['Vast','C','Ian','I','L','Luke',\
-                                    'lxk'])].date.dt.hour,
-    name='Non-EU'
+user3 = go.Histogram(
+    x=comp.utimes.loc[comp.utimes['name'] == 'user3'].date.dt.hour,
+    name='user3'
 )
 
 @app.route('/')
@@ -153,8 +99,7 @@ def index():
         ),
 
         dict( # --- by user hours histogram
-            data = [eu, noneu, garagely, ds, simon, abdul, ian, ah, ben, \
-                    tony, luke, helder, henri, wops, vast],
+            data = [user1, user2, user3],
             layout = dict(
                 title='Chat Interactions By User / Hour - CET',
                 barmode='overlay',
@@ -166,136 +111,29 @@ def index():
                         buttons=list([
 
                             dict(
-                                args=['visible', [True, True, True, True, True,\
-                                                True, True, True, True, True,\
-                                                True, True, True, True, True]],
+                                args=['visible', [True, True, True]],
                                 label='All',
                                 method='restyle'
                             ),
                             dict(
-                                args=['visible', [True, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Europeans',
+                                args=['visible', [True, False, False]],
+                                label='User1',
                                 method='restyle'
                             ),
                             dict(
-                                args=['visible', [False, True, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False,False,\
-                                                False, False, False]],
-                                label='Non-Europeans',
+                                args=['visible', [False, True, False]],
+                                label='User2',
                                 method='restyle'
                             ),
                             dict(
-                                args=['visible', [False, False, True, False,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Garagely',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, True,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Ds',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                True, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='qx',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, True, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Abdul',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, True, False,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Ian',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, True,\
-                                                False, False, False, False,\
-                                                False, False, False]],
-                                label='Ash',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                True, False, False, False,\
-                                                False, False, False]],
-                                label='Ben',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, True, False, False,\
-                                                False, False, False]],
-                                label='Tony',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, True, False,\
-                                                False, False, False]],
-                                label='Luke',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False, True,\
-                                                False, False, False]],
-                                label='Helder',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                True, False, False]],
-                                label='Henri',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, True, False]],
-                                label='Wops',
-                                method='restyle'
-                            ),
-                            dict(
-                                args=['visible', [False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, False, False,\
-                                                False, False, True]],
-                                label='Vast',
+                                args=['visible', [False, False, True]],
+                                label='User3',
                                 method='restyle'
                             )
-                        ]),
-                    )
-                ]),
-            )
+                            ])
+                        )
+                    ])
+                )
         ),
 
         dict(   # --- popular types
@@ -353,9 +191,9 @@ def index():
     ]
 
 
-    # Add "ids" to each of the graphs to pass up to the client
+    # Add "iuser2" to each of the graphs to pass up to the client
     # for templating
-    ids = ['graph-{}'.format(i) for i, _ in enumerate(graphs)]
+    iuser2 = ['graph-{}'.format(i) for i, _ in enumerate(graphs)]
     idhist = ['graph-{}'.format(i) for i, _ in enumerate(graphs[2])]
 
     # Convert the figures to JSON
@@ -364,7 +202,7 @@ def index():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     histJSON = json.dumps(graphs[2], cls=plotly.utils.PlotlyJSONEncoder)
     return render_template('layouts/index.html',
-                           ids=ids,
+                           iuser2=iuser2,
                            graphJSON=graphJSON,
                            histJSON=histJSON,
                            idhist=idhist)

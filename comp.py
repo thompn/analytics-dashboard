@@ -7,11 +7,13 @@ from datetime import datetime
 import plotly
 import plotly.offline as py
 import plotly.graph_objs as go
-
+# --- set db connection from sql cnf file ---
 db=MySQLdb.connect(read_default_group='trough')
 cursor = db.cursor()
+# --- set query ---
 query = "SELECT * FROM messages"
 
+# --- read db with query and build dataframe from sql ---
 df = pd.read_sql(query, db)
 df.columns=[["usr","name","id","text","date","type","file","chatid","chattype"]]
 messages = df[["id","name","date","text","file"]]
@@ -77,37 +79,23 @@ def get_words(data, number, *args):
         allwords = Counter(" ".join(words).split()).most_common(number)
         allwords = [x for x in allwords if x[0] not in top]
     return allwords
-
-
-compare = arg_compare(messages, 'boat', 'spare', 'whitstable', 'kimera')
-
+# --- build word comparison dataframe and run function to aggregate data ---
+compare = arg_compare(messages, 'arg1', 'arg2', 'arg3', 'arg4')
 pop = order_resample(compare)
 
+# --- build totals dataframe for total graphs ---
 tots = messages[['date','id','name','text']]
 names_tots = tots.groupby('name')
 totals = names_tots.size().sort_values(ascending=False)
-
 totals = totals.to_frame()
 
-most_popular = get_words(messages, 10000,100)
-most_popularlisttwo = []
-for x in most_popular:
-    if x[0] == "#":
-        pass
-    else:
-        most_popularlisttwo.append(x)
-most_popular = most_popularlisttwo
-hashtags = ([x for x in most_popular if "#" in x[0]])
-hashtags = pd.DataFrame(hashtags).head(10)
-hashtags.columns = [["word","count"]]
-
+# --- build types dataframe for histogram---
 types = df[['date','name','type']]
 types.index = types.date
 del types['date']
 types['count'] = 1
 chattypes = types.groupby('type').sum()
 chattypes = chattypes.drop(chattypes.index[[0,1,2,3]])
-
 usertypes = df[['name','date','type']]
 usertypes['count'] = 1
 usertypes.groupby(['name','type']).sum()
@@ -126,6 +114,7 @@ for row in usertypes.itertuples():
     stickers.append(row[6]) #sticker
     videos.append(row[8]) #videos
 
+# -- build user times dataframe for histogram ---
 utimes = tots[['date','name']]
 utimes['count']=1
 utimes = utimes[utimes.name != 'Risan']
