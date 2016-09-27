@@ -13,11 +13,13 @@ The dashboard requires:
 * Python 3
 * Flask
 * Pandas
-* Plotly offline
+* Plotly 
 
 ### Usage
 
 Whilst this dashboard is bespoke, the backend computation script can be adopted to any data source and series of dataframes in pandas.
+
+*Development dataset was generated from a telegram group chat, via a telegram bot*
 
 Ensure requirments are fulfilled, and run the app:
 ```sh
@@ -27,3 +29,4 @@ $ * Running on http://0.0.0.0:9999/ (Press CTRL+C to quit)
 ```
 Navigate to localhost:9999 to see web output, or push to a web server (be sure to disable debugging).
 
+![](https://github.com/thompn/analytics-dashboard/blob/master/static/images/screenshot.png?raw=true)]
