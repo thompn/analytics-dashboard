@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<style>
+{% for id in ids %}
+#{{id}} {width:50%;
+         float: left;
+         border-bottom: 0.1px solid rgba(6, 131, 201, 0.22)
+         }
+{% endfor %}
+#graph-2 {width:100%; height:700px;}
+
+</style>
+<!-- title and meta -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="description" content="" />
+<title>Dashboard</title>
+
+<!-- css -->
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/analytics.css') }}">
+<!-- js -->
+<script src={{ url_for('static',filename='js/classie.js') }}></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    function init() {
+        window.addEventListener('scroll', function(e){
+            var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+                shrinkOn = 80,
+                header = document.querySelector("header");
+            if (distanceY > shrinkOn) {
+                classie.add(header,"smaller");
+            } else {
+                if (classie.has(header,"smaller")) {
+                    classie.remove(header,"smaller");
+                }
+            }
+        });
+    }
+    window.onload = init();
+</script>
+</head>
+
+
+
+<body>
+
+<div id="wrapper">
+
+<header>
+    <div class="container clearfix">
+        <h1 id="logo">
+            Analytics
+        </h1>
+
+    </div>
+</header><!-- /header -->
+<div id="main">
+    <div id="content">
+        <section>
+            <div class="container">
+              {% for id in ids %}
+              <div id="{{id}}"></div>
+              {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+
+
+<footer>
+    - <script type="text/javascript">
+  document.write(new Date().getFullYear());
+</script> -
+    <!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Plotly.js
+    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+  -->
+
+    <script type="text/javascript">
+
+        var graphs = {{graphJSON | safe}};
+        var ids = {{ids | safe}};
+
+        for(var i in graphs) {
+            Plotly.plot(ids[i],
+                        graphs[i].data,
+                        graphs[i].layout || {},
+                        {showLink: false},
+                        {displayModeBar: false});
+        }
+
+    </script>
+
+</footer>
+
+</html>
